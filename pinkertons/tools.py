@@ -40,3 +40,17 @@ class SuperState(object):
                     res=(self.state.player_state(joueur[0],joueur[1]).position-self.player).norm
         return res
     
+
+    @property
+    def alpha(self):
+        a=abs(((self.goal-self.player).x+200)/(self.dgoal+1))
+        return a
+    
+'''    
+    @property
+    def cangle(self):
+        if abs((self.goal-self.player).y)<1:
+            return ((self.goal-self.player).x+200)/40
+        else:
+            return abs(((self.goal-self.player).x+200)/((self.goal-self.player).y**0.1))/40
+'''       

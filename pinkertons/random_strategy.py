@@ -19,7 +19,7 @@ class FonceurStrategy(Strategy):
             return SoccerAction(s.ball-s.player,s.goal-s.player)
         
 class AttaquantStrategy(Strategy):
-    def __init__(self,strength=1):
+    def __init__(self,strength=5.1):
         Strategy.__init__(self, "Attaquant")
         self.strength=strength
 
@@ -27,16 +27,22 @@ class AttaquantStrategy(Strategy):
         # id_team is 1 or 2
         # id_player starts at 0
         s=SuperState(state,id_team,id_player)
-        if(s.dgoal<GAME_WIDTH/2):   
-            if s.dball<PLAYER_RADIUS+BALL_RADIUS:
-                return SoccerAction(s.ball-s.player-s.vball*10,(s.goal-s.player).normalize())
-            else:
-                return SoccerAction(s.ball+s.vball*10-s.player,0)
+       
+
+
+        if s.dball<PLAYER_RADIUS+BALL_RADIUS:
+                
+                return SoccerAction(s.ball-s.player-s.vball*10,(s.goal-s.player).normalize()*self.strength*s.alpha)
         else:
-            if s.dball<PLAYER_RADIUS+BALL_RADIUS:
-                return SoccerAction(s.ball-s.player-s.vball*10,(s.goal-s.player).normalize()*self.strength)
-            else:
                 return SoccerAction(s.ball+s.vball*10-s.player,0)
+'''
+       if(s.dgoal<GAME_WIDTH/1.2):   
+    if s.dball<PLAYER_RADIUS+BALL_RADIUS:
+        return SoccerAction(s.ball-s.player-s.vball*10,(s.goal-s.player).normalize())
+    else:
+        return SoccerAction(s.ball+s.vball*10-s.player,0)
+else:
+'''
 
 class DefonceurStrategy(Strategy):
     def __init__(self):

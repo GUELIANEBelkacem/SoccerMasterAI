@@ -12,7 +12,7 @@ from .tools import*
 from sklearn.model_selection import ParameterGrid
 
 class GoalSearch(object):
-    def __init__(self,strategy,params,simu=None, trials=5,max_steps=1000000,max_round_step=40):
+    def __init__(self,strategy,params,simu=None, trials=15,max_steps=1000000,max_round_step=40):
         self.strategy=strategy
         self.params=params.copy()
         self.simu=simu
@@ -45,8 +45,8 @@ class GoalSearch(object):
         self.res = dict() # Dictionary of results
 
     def begin_round ( self , team1 , team2 , state ):
-        ball = Vector2D.create_random(low=0,high=50)
-        ball.x+=GAME_WIDTH/2
+        ball = Vector2D.create_random(low=-30,high=30)
+        ball.x+=GAME_WIDTH*5/10
         ball.y+=GAME_HEIGHT/2
         # Player and ball postion ( random )
         self.simu.state.states[(1 , 0)].position = ball.copy() # Player position
