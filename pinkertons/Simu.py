@@ -8,11 +8,11 @@ Created on Mon Feb 11 18:06:52 2019
 
 from soccersimulator import Strategy, SoccerAction, Vector2D, SoccerTeam, Simulation, show_simu
 from soccersimulator.settings import*
-from tools import*
+from .tools import*
 from sklearn.model_selection import ParameterGrid
 
 class GoalSearch(object):
-    def __init__(self,strategy,params,simu=None, trials=20,max_steps=1000000,max_round_step=40):
+    def __init__(self,strategy,params,simu=None, trials=5,max_steps=1000000,max_round_step=40):
         self.strategy=strategy
         self.params=params.copy()
         self.simu=simu
