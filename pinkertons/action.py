@@ -18,8 +18,9 @@ class Shoot(object):
         self.superstate=superstate
         
     def to_goal(self):
-        strength=0.5
+        strength=0.032
         if self.superstate.dball<PLAYER_RADIUS+BALL_RADIUS:
+            print(self.superstate.alpha)
             return SoccerAction(shoot=(self.superstate.goal-self.superstate.player).normalize()*strength*self.superstate.alpha)
         else:
             return SoccerAction()

@@ -37,11 +37,28 @@ class DefonceurStrategy(Strategy):
                 return m.to_ball()+sh.to_goal()
             else:
                 if(s.dplayerfr<GAME_HEIGHT/2):
-                    return SoccerAction((s.player-s.poplayerfr)*999,(s.player-s.poplayerfr)*999)
+                    if(abs((((s.player-s.poplayerfr)*3+(s.goal-s.player)/2)/12).x)-abs(abs(s.goal.x-GAME_WIDTH)-s.player.x)<GAME_HEIGHT/5 and abs((((s.player-s.poplayerfr)*3+(s.goal-s.player)/2)/12).y)-abs(s.goal.y-s.player.y)<GAME_HEIGHT/5 ):
+                         return m.to_ball()+sh.to_goal()
+                    else:
+                         return SoccerAction((s.player-s.poplayerfr)*999,((s.player-s.poplayerfr)*3+(s.goal-s.player)/2)/12)
                 else:
                     return m.to_ball()+sh.to_goal()
         else:
             return SoccerAction(Vector2D(abs(s.goal.x-GAME_WIDTH+10)-s.player.x,s.goal.y-s.player.y),s.goal-s.player)
+        
+        
+class FonceurStrategy(Strategy):
+    def __init__(self):
+        Strategy.__init__(self, "Fonceur")
+
+    def compute_strategy(self, state, id_team, id_player):
+        # id_team is 1 or 2
+        # id_player starts at 0
+        s=SuperState(state,id_team,id_player)
+        if s.dball<PLAYER_RADIUS+BALL_RADIUS:
+            return SoccerAction(s.ball-s.player,s.goal-s.player)
+        else:
+            return SoccerAction(s.ball-s.player,s.goal-s.player)
         
         
 """
@@ -56,17 +73,6 @@ class DefonceurStrategy(Strategy):
 """
 
 
-'''
-class FonceurStrategy(Strategy):
-    def __init__(self):
-        Strategy.__init__(self, "Fonceur")
 
-    def compute_strategy(self, state, id_team, id_player):
-        # id_team is 1 or 2
-        # id_player starts at 0
-        s=SuperState(state,id_team,id_player)
-        if s.dball<PLAYER_RADIUS+BALL_RADIUS:
-            return SoccerAction(s.ball-s.player,s.goal-s.player)
-        else:
-            return SoccerAction(s.ball-s.player,s.goal-s.player)
-'''        
+
+      

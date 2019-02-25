@@ -1,4 +1,4 @@
-"""
+
 from soccersimulator import Strategy, SoccerAction, Vector2D, SoccerTeam, Simulation, show_simu
 from soccersimulator.settings import*
 from tools import*
@@ -124,4 +124,4 @@ simu = Simulation(team1, team2)
 
 # Simulate and display the match
 show_simu(simu)
-"""
+

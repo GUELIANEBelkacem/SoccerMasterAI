@@ -10,9 +10,9 @@ team1 = SoccerTeam(name="Team 1")
 team2 = SoccerTeam(name="Team 2")
 
 # Add players
-team1.add("Attaquant", AttaquantStrategy())  # Random strategy
-#team1.add("Defenceur",DefonceurStrategy())
-#team2.add("Fonceur", AttaquantStrategy())   # Static strategy
+team1.add("Attaquant", FonceurStrategy())  # Random strategy
+team1.add("Defenceur",DefonceurStrategy())
+team2.add("Fonceur", AttaquantStrategy())   # Static strategy
 team2.add("Defenceur",DefonceurStrategy())# Static strategy
 
 # Create a match

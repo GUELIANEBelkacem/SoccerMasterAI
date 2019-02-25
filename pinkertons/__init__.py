@@ -6,7 +6,7 @@ Created on Mon Feb 18 16:21:37 2019
 @author: 3804546
 """
 
-from .random_strategy import AttaquantStrategy, DefonceurStrategy
+from .random_strategy import AttaquantStrategy, DefonceurStrategy, FonceurStrategy
 from soccersimulator import SoccerTeam
 
 def get_team(nb_players):

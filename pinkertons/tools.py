@@ -76,7 +76,7 @@ class SuperState(object):
 
     @property
     def alpha(self):
-        a=abs(((self.goal-self.player).x+200)/(self.dgoal+1))
+        a=abs(((self.goal-self.player).x)*2/(self.dgoal+1))+100
         return a
     
 '''    
