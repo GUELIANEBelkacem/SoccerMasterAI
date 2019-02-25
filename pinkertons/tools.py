@@ -32,13 +32,46 @@ class SuperState(object):
     def dball(self):
         return (self.ball-self.player).norm
     @property
-    def dplayer(self):
+    def dplayeren(self):
         res=GAME_WIDTH
         for joueur in self.state.players:
             if(joueur[0]==(self.id_team%2)+1):
                 if((self.state.player_state(joueur[0],joueur[1]).position-self.player).norm<res):
                     res=(self.state.player_state(joueur[0],joueur[1]).position-self.player).norm
         return res
+    
+    @property
+    def dplayerfr(self):
+        res=GAME_WIDTH
+        for joueur in self.state.players:
+            if(joueur[0]==(self.id_team) and joueur[1]!=self.id_player):
+                if((self.state.player_state(joueur[0],joueur[1]).position-self.player).norm<res):
+                    res=(self.state.player_state(joueur[0],joueur[1]).position-self.player).norm
+        return res
+    
+    @property
+    def idplayerfr(self):
+        res=GAME_WIDTH
+        a=self.id_player
+        for joueur in self.state.players:
+            if(joueur[0]==(self.id_team) and joueur[1]!=self.id_player):
+                if((self.state.player_state(joueur[0],joueur[1]).position-self.player).norm<res):
+                    res=(self.state.player_state(joueur[0],joueur[1]).position-self.player).norm
+                    a=joueur[1]
+        return a
+    
+    @property
+    def isplayerfr(self):
+        a=False
+        for joueur in self.state.players:
+            if(joueur[0]==(self.id_team) and joueur[1]!=self.id_player):
+                if((self.state.player_state(joueur[0],joueur[1]).position-self.state.ball.position).norm<(PLAYER_RADIUS+BALL_RADIUS)*2):
+                    a=True
+        return a
+    
+    @property
+    def poplayerfr(self):
+        return self.state.player_state(self.id_team, self.idplayerfr).position
     
 
     @property

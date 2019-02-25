@@ -46,7 +46,7 @@ class GoalSearch(object):
 
     def begin_round ( self , team1 , team2 , state ):
         ball = Vector2D.create_random(low=-30,high=30)
-        ball.x+=GAME_WIDTH*5/10
+        ball.x+=GAME_WIDTH*8/10
         ball.y+=GAME_HEIGHT/2
         # Player and ball postion ( random )
         self.simu.state.states[(1 , 0)].position = ball.copy() # Player position
