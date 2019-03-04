@@ -79,6 +79,20 @@ class SuperState(object):
         a=abs(((self.goal-self.player).x)*2/(self.dgoal+1))+100
         return a
     
+    @property
+    def anticiper(self):
+        return self.dball*self.vball*(0.3)
+    
+    @property 
+    def anticipery(self):
+        a=(self.goal.y-self.ball.y)/(self.goal.x-self.ball.x+1)
+        b=self.goal.y-a*self.goal.x
+        return a*self.anticiperx+b
+    
+    @property
+    def anticiperx(self):
+        return abs(((self.id_team+1)%2)*GAME_WIDTH-GAME_WIDTH*3/8)
+        
 '''    
     @property
     def cangle(self):
