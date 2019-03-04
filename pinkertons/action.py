@@ -7,6 +7,7 @@ import math
 class Move(object):
     def __init__(self,superstate):
         self.superstate=superstate
+
         
         
     def to_ball(self):
@@ -20,16 +21,25 @@ class Shoot(object):
     def __init__(self,superstate):
         self.superstate=superstate
         
-    def to_goal(self):
+    def to_goal(self,forcet):
+        forcet=1
         strength=0.032
         if self.superstate.dball<PLAYER_RADIUS+BALL_RADIUS:
-            return SoccerAction(shoot=(self.superstate.goal-self.superstate.player).normalize()*strength*self.superstate.alpha)
+            return SoccerAction(shoot=(self.superstate.goal-self.superstate.player).normalize()*strength*self.superstate.alpha*forcet)
         else:
             return SoccerAction()
     
     def to_pass(self):
-        return SoccerAction(shoot = self.superstate.player-self.superstate.poplayerfr)
+        strength=0.032
+        return SoccerAction(shoot = Vector2D(((self.superstate.player-self.superstate.poplayerfr).normalize()*strength*self.superstate.alpha).x,((self.superstate.player-self.superstate.poplayerfr).normalize()*strength*self.superstate.alpha).y+((self.superstate.player-self.superstate.goal).normalize()*strength*self.superstate.alpha).y/8))
     
+    def to_defend(self):
+        strength=0.032
+        if(self.superstate.player.y>GAME_HEIGHT/2):
+            return SoccerAction(shoot = 10*Vector2D(((self.superstate.goal-self.superstate.player).normalize()*strength*self.superstate.alpha).x,((self.superstate.goal-self.superstate.player).normalize()*strength*self.superstate.alpha).y+GAME_HEIGHT/100) )
+        else:
+            return SoccerAction(shoot = 10*Vector2D(((self.superstate.goal-self.superstate.player).normalize()*strength*self.superstate.alpha).x,((self.superstate.goal-self.superstate.player).normalize()*strength*self.superstate.alpha).y-GAME_HEIGHT/100) )
+            
         
 '''
 if s.dball<PLAYER_RADIUS+BALL_RADIUS:

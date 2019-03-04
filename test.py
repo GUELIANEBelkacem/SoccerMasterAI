@@ -1,13 +1,17 @@
 from pinkertons import *
 from pinkertons.Simu import GoalSearch
+from pinkertons.Simuc import GoalSearchc
 from soccersimulator import Strategy, SoccerAction, Vector2D, SoccerTeam, Simulation, show_simu
 from soccersimulator.settings import*
 import pylab
-
-
+'''
+g=GoalSearchc(strategy=AttaquantStrategy(),params={"strength": pylab.frange(0.4,0.6,0.02)})
+g.start()
+'''
 # Create teams
 team1 = SoccerTeam(name="Team 1")
 team2 = SoccerTeam(name="Team 2")
+
 
 # Add players
 team1.add("Attaquant", FonceurStrategy())  # Random strategy
