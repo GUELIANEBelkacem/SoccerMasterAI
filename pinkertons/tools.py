@@ -26,6 +26,9 @@ class SuperState(object):
     def goal(self):
         return Vector2D((self.id_team%2)*GAME_WIDTH, GAME_HEIGHT/2)
     @property
+    def my_goal(self):
+        return Vector2D(((self.id_team+1)%2)*GAME_WIDTH, GAME_HEIGHT/2)
+    @property
     def dgoal(self):
         return (self.goal-self.player).norm
     @property
@@ -35,7 +38,7 @@ class SuperState(object):
     def dplayeren(self):
         res=GAME_WIDTH
         for joueur in self.state.players:
-            if(joueur[0]==(self.id_team%2)+1):
+            if(joueur[0]==((self.id_team%2)+1)):
                 if((self.state.player_state(joueur[0],joueur[1]).position-self.player).norm<res):
                     res=(self.state.player_state(joueur[0],joueur[1]).position-self.player).norm
         return res
@@ -61,6 +64,17 @@ class SuperState(object):
         return a
     
     @property
+    def idplayeren(self):
+        res=GAME_WIDTH
+        a=self.id_player
+        for joueur in self.state.players:
+            if(joueur[0]==((self.id_team%2)+1)):
+                if((self.state.player_state(joueur[0],joueur[1]).position-self.player).norm<res):
+                    res=(self.state.player_state(joueur[0],joueur[1]).position-self.player).norm
+                    a=joueur[1]
+        return a
+    
+    @property
     def isplayerfr(self):
         a=False
         for joueur in self.state.players:
@@ -73,11 +87,19 @@ class SuperState(object):
     def poplayerfr(self):
         return self.state.player_state(self.id_team, self.idplayerfr).position
     
+    @property
+    def poplayeren(self):
+        return self.state.player_state(((self.id_team%2)+1), self.idplayeren).position
+    
 
     @property
     def alpha(self):
         a=abs(((self.goal-self.player).x)*2/(self.dgoal+1))+100
         return a
+    @property 
+    def pass_alpha(self):
+        a=self.dplayerfr*3.5
+        return a+10
     
     @property
     def anticiper(self):
@@ -85,13 +107,13 @@ class SuperState(object):
     
     @property 
     def anticipery(self):
-        a=(self.goal.y-self.ball.y)/(self.goal.x-self.ball.x+1)
-        b=self.goal.y-a*self.goal.x
+        a=(self.my_goal.y-self.ball.y)/(self.my_goal.x-self.ball.x+1)
+        b=self.my_goal.y-a*self.my_goal.x
         return a*self.anticiperx+b
     
     @property
     def anticiperx(self):
-        return abs(((self.id_team+1)%2)*GAME_WIDTH-GAME_WIDTH*3/8)
+        return abs(self.my_goal.x-GAME_WIDTH*3/8)
         
 '''    
     @property

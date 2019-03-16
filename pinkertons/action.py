@@ -31,15 +31,18 @@ class Shoot(object):
     
     def to_pass(self):
         strength=0.032
-        return SoccerAction(shoot = Vector2D(((self.superstate.player-self.superstate.poplayerfr).normalize()*strength*self.superstate.alpha).x,((self.superstate.player-self.superstate.poplayerfr).normalize()*strength*self.superstate.alpha).y+((self.superstate.player-self.superstate.goal).normalize()*strength*self.superstate.alpha).y/8))
+        return SoccerAction(shoot = 1.25*Vector2D(((self.superstate.poplayerfr-self.superstate.player).normalize()*strength*self.superstate.pass_alpha).x,((self.superstate.poplayerfr-self.superstate.player).normalize()*strength*self.superstate.pass_alpha).y+((self.superstate.goal-self.superstate.player).normalize()*strength*self.superstate.alpha).y/4))
     
     def to_defend(self):
         strength=0.032
+        return SoccerAction(shoot = 1.5*Vector2D(((self.superstate.goal-self.superstate.player+(self.superstate.poplayerfr-self.superstate.player)/3).normalize()*strength*self.superstate.alpha).x,((self.superstate.goal-self.superstate.player+(self.superstate.poplayerfr-self.superstate.player)/3).normalize()*strength*self.superstate.alpha).y))
+        '''
         if(self.superstate.player.y>GAME_HEIGHT/2):
             return SoccerAction(shoot = 10*Vector2D(((self.superstate.goal-self.superstate.player).normalize()*strength*self.superstate.alpha).x,((self.superstate.goal-self.superstate.player).normalize()*strength*self.superstate.alpha).y+GAME_HEIGHT/100) )
         else:
             return SoccerAction(shoot = 10*Vector2D(((self.superstate.goal-self.superstate.player).normalize()*strength*self.superstate.alpha).x,((self.superstate.goal-self.superstate.player).normalize()*strength*self.superstate.alpha).y-GAME_HEIGHT/100) )
-            
+        -(self.superstate.poplayeren-self.superstate.poplayerfr).y*2
+        '''    
         
 '''
 if s.dball<PLAYER_RADIUS+BALL_RADIUS:

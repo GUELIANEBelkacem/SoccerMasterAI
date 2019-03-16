@@ -39,7 +39,7 @@ class DefonceurStrategy(Strategy):
             else:
                 if(s.dplayerfr<GAME_HEIGHT/2):
                     if(abs((((s.player-s.poplayerfr)*3+(s.goal-s.player)/2)/12).x)-abs(abs(s.goal.x-GAME_WIDTH)-s.player.x)<GAME_HEIGHT/5 and abs((((s.player-s.poplayerfr)*3+(s.goal-s.player)/2)/12).y)-abs(s.goal.y-s.player.y)<GAME_HEIGHT/5 ):
-                         return m.to_ball()+sh.to_pass()
+                         return m.to_ball()+sh.to_defend()
                     else:
                          return m.to_ball()+sh.to_pass()
                 else:
