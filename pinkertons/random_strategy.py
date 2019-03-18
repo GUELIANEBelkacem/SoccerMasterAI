@@ -19,7 +19,6 @@ class AttaquantStrategy(Strategy):
         s=SuperState(state,id_team,id_player)
         m=Move(s)
         sh=Shoot(s)
-        
         return m.to_ball()+sh.to_goal(self.forcet)
 
 class DefonceurStrategy(Strategy):
@@ -34,8 +33,12 @@ class DefonceurStrategy(Strategy):
         sh=Shoot(s)
 
         if(s.dball<GAME_WIDTH/2) and (s.dplayeren<(GAME_WIDTH/2)) and s.dgoal>(GAME_WIDTH*5/8):
-            if not(s.dball<PLAYER_RADIUS+BALL_RADIUS) :
-                return m.to_ball()+sh.to_defend()
+            if not(s.dball<PLAYER_RADIUS+BALL_RADIUS+GAME_WIDTH*0.1) :
+                if(s.dballen>GAME_WIDTH*0.3):
+                    return m.to_home()+sh.to_defend()
+                else:
+                    return m.to_ball()+sh.to_defend()
+                
             else:
                 if(s.dplayerfr<GAME_HEIGHT/2):
                     if(abs((((s.player-s.poplayerfr)*3+(s.goal-s.player)/2)/12).x)-abs(abs(s.goal.x-GAME_WIDTH)-s.player.x)<GAME_HEIGHT/5 and abs((((s.player-s.poplayerfr)*3+(s.goal-s.player)/2)/12).y)-abs(s.goal.y-s.player.y)<GAME_HEIGHT/5 ):
@@ -62,6 +65,46 @@ class FonceurStrategy(Strategy):
             return SoccerAction(s.ball-s.player,s.goal-s.player)
         else:
             return SoccerAction(s.ball-s.player,s.goal-s.player)
+
+
+
+class CoteStrategyd(Strategy):
+    def __init__(self,forcet=1):
+        Strategy.__init__(self, "wing")
+        self.forcet=forcet
+
+    def compute_strategy(self, state, id_team, id_player):
+        # id_team is 1 or 2
+        # id_player starts at 0
+        s=SuperState(state,id_team,id_player)
+        m=Move(s)
+        sh=Shoot(s)
+        if(not(s.ami)):
+            return m.to_betweend()+sh.to_goal(self.forcet)
+        else:
+            if(s.shouldipass):
+                m.to_ball()+sh.to_pass()
+            else:
+                m.to_ball()+sh.to_goal(self.forcet)
+        
+class CoteStrategyg(Strategy):
+    def __init__(self,forcet=1):
+        Strategy.__init__(self, "wing")
+        self.forcet=forcet
+
+    def compute_strategy(self, state, id_team, id_player):
+        # id_team is 1 or 2
+        # id_player starts at 0
+        s=SuperState(state,id_team,id_player)
+        m=Move(s)
+        sh=Shoot(s)
+        if(not(s.ami)):
+            return m.to_betweend()+sh.to_goal(self.forcet)
+        else:
+            if(s.shouldipass):
+                m.to_ball()+sh.to_pass()
+            else:
+                m.to_ball()+sh.to_goal(self.forcet)    
         
 
 '''       

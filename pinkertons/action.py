@@ -15,20 +15,33 @@ class Move(object):
     
     def to_home(self):
         return SoccerAction(acceleration=(Vector2D(self.superstate.anticiperx-self.superstate.player.x,self.superstate.anticipery-self.superstate.player.y))*999)
+    def to_betweend(self):
+        return SoccerAction(acceleration=(self.superstate.betweend-self.superstate.player)*999)
+    def to_betweeng(self):
+        return SoccerAction(acceleration=(self.superstate.betweeng-self.superstate.player)*999)
     
     
 class Shoot(object):
+    hoha=1
     def __init__(self,superstate):
         self.superstate=superstate
-        
     def to_goal(self,forcet):
+
         forcet=1
         strength=0.032
-        if self.superstate.dball<PLAYER_RADIUS+BALL_RADIUS:
+        if (self.superstate.dball<PLAYER_RADIUS+BALL_RADIUS+1)and(Shoot.hoha==1):
+            Shoot.hoha=0
             return SoccerAction(shoot=(self.superstate.goal-self.superstate.player).normalize()*strength*self.superstate.alpha*forcet)
         else:
-            return SoccerAction()
-    
+            if (self.superstate.dball<PLAYER_RADIUS+BALL_RADIUS)and(Shoot.hoha==0):
+                if(self.superstate.ball.x==GAME_WIDTH/2)and(self.superstate.ball.y==GAME_HEIGHT/2):
+                    Shoot.hoha=1
+                return SoccerAction(shoot=(self.superstate.goal-self.superstate.player).normalize()*strength*self.superstate.alpha*forcet)
+            else:
+                if(self.superstate.ball.x==GAME_WIDTH/2)and(self.superstate.ball.y==GAME_HEIGHT/2):
+                    Shoot.hoha=1
+                return SoccerAction()
+        
     def to_pass(self):
         strength=0.032
         return SoccerAction(shoot = 1.25*Vector2D(((self.superstate.poplayerfr-self.superstate.player).normalize()*strength*self.superstate.pass_alpha).x,((self.superstate.poplayerfr-self.superstate.player).normalize()*strength*self.superstate.pass_alpha).y+((self.superstate.goal-self.superstate.player).normalize()*strength*self.superstate.alpha).y/4))
