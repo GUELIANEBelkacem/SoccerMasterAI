@@ -44,7 +44,7 @@ class Shoot(object):
         
     def to_pass(self):
         strength=0.032
-        return SoccerAction(shoot = 1.25*Vector2D(((self.superstate.poplayerfr-self.superstate.player).normalize()*strength*self.superstate.pass_alpha).x,((self.superstate.poplayerfr-self.superstate.player).normalize()*strength*self.superstate.pass_alpha).y+((self.superstate.goal-self.superstate.player).normalize()*strength*self.superstate.alpha).y/4))
+        return SoccerAction(shoot = 1.05*Vector2D(((self.superstate.poplayerfr-self.superstate.player).normalize()*strength*self.superstate.pass_alpha).x,((self.superstate.poplayerfr-self.superstate.player).normalize()*strength*self.superstate.pass_alpha).y+((self.superstate.goal-self.superstate.player).normalize()*strength*self.superstate.alpha).y/4))
     
     def to_defend(self):
         strength=0.032

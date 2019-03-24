@@ -12,6 +12,11 @@ import numpy.linalg as la
 import math
 
 class SuperState(object):
+    hoha=0
+    hoha1=0
+    hoha2=0
+    hoha3=0
+    hoha4=0
     def __init__(self,state,id_team,id_player):
         self.state=state
         self.id_team=id_team
@@ -153,7 +158,7 @@ class SuperState(object):
         l=[]
         for joueur in self.state.players:
             if(joueur[0]==((self.id_team%2)+1)):
-                li=[self.state.player_state(joueur[0], joueur[1]).position.y,joueur[1]]
+                li=[(self.state.player_state(joueur[0], joueur[1]).position.y),joueur[1]]
                 l.append(li)
                 
         l.sort(key=lambda l:l[0])
@@ -167,7 +172,7 @@ class SuperState(object):
         l=[]
         for joueur in self.state.players:
             if(joueur[0]==((self.id_team%2)+1)):
-                li=[self.state.player_state(joueur[0], joueur[1]).position.y,joueur[1]]
+                li=[(self.state.player_state(joueur[0], joueur[1]).position.y),joueur[1]]
                 l.append(li)
                 
         l.sort(key=lambda l:l[0], reverse=True)
@@ -176,16 +181,53 @@ class SuperState(object):
         return l
     @property 
     def betweend(self):
-        l=self.dtwod
-        a=(self.state.player_state(((self.id_team%2)+1),l[0][1]).position-self.state.player_state(((self.id_team%2)+1), l[1][1]).position)/2
-        return a
+        if(SuperState.hoha==1):
+            l=self.dtwod
+            SuperState.hoha1=l[1][1]
+            SuperState.hoha2=l[0][1]
+            a=self.state.player_state(((self.id_team%2)+1), SuperState.hoha1).position+(self.state.player_state(((self.id_team%2)+1),SuperState.hoha2).position-self.state.player_state(((self.id_team%2)+1), SuperState.hoha1).position)/2
+            SuperState.hoha=0
+            return a
+        else:
+            if(self.ball.x==GAME_WIDTH/2)and(self.ball.y==GAME_HEIGHT/2):
+                l=self.dtwod
+                SuperState.hoha1=l[1][1]
+                SuperState.hoha2=l[0][1]
+                a=self.state.player_state(((self.id_team%2)+1), SuperState.hoha1).position+(self.state.player_state(((self.id_team%2)+1),SuperState.hoha2).position-self.state.player_state(((self.id_team%2)+1), SuperState.hoha1).position)/2
+                return a
+            else:
+                a=self.state.player_state(((self.id_team%2)+1), SuperState.hoha1).position+(self.state.player_state(((self.id_team%2)+1),SuperState.hoha2).position-self.state.player_state(((self.id_team%2)+1), SuperState.hoha1).position)/2
+                return a
+            
     
     @property 
     def betweeng(self):
-        l=self.dtwog
-        a=(self.state.player_state(((self.id_team%2)+1), l[0][1]).position-self.state.player_state(((self.id_team%2)+1), l[1][1]).position)/2
-        return a
-    
+        '''
+        print(SuperState.hoha)
+        print(SuperState.hoha1)
+        print(SuperState.hoha2)
+        print(SuperState.hoha3)
+        print(SuperState.hoha4)
+        '''
+        if(SuperState.hoha==1):
+            l=self.dtwog
+            SuperState.hoha3=l[1][1]
+            SuperState.hoha4=l[0][1]
+            a=self.state.player_state(((self.id_team%2)+1), SuperState.hoha3).position+(self.state.player_state(((self.id_team%2)+1),SuperState.hoha4).position-self.state.player_state(((self.id_team%2)+1), SuperState.hoha3).position)/2
+            SuperState.hoha=0
+            
+            return a
+        
+        else:
+            if(self.ball.x==GAME_WIDTH/2)and(self.ball.y==GAME_HEIGHT/2):
+                l=self.dtwog
+                SuperState.hoha3=l[1][1]
+                SuperState.hoha4=l[0][1]
+                a=self.state.player_state(((self.id_team%2)+1), SuperState.hoha3).position+(self.state.player_state(((self.id_team%2)+1),SuperState.hoha4).position-self.state.player_state(((self.id_team%2)+1), SuperState.hoha3).position)/2
+                return a
+            else:
+                a=self.state.player_state(((self.id_team%2)+1), SuperState.hoha3).position+(self.state.player_state(((self.id_team%2)+1),SuperState.hoha4).position-self.state.player_state(((self.id_team%2)+1), SuperState.hoha3).position)/2
+                return a
 
     def ang(self, v1, v2):
         a=math.acos((v1.x*v2.x+v1.y*v2.y)/abs(v1.norm*v2.norm))
@@ -195,7 +237,7 @@ class SuperState(object):
     @property 
     def shouldipass(self):
         l=[]
-        a=True
+        a=False
         if(self.dgoal>GAME_WIDTH*0.25):
             for joueur in self.state.players:
                 if(joueur[0]==((self.id_team%2)+1)):
@@ -203,8 +245,8 @@ class SuperState(object):
             for e in l:
                 tic=e-self.player
                 toc=self.poplayerfr-self.player
-                if(self.ang(tic,toc)<0.5236):
-                    a=False
+                if(self.ang(tic,toc)>1):
+                    a=True
         return a
     
     @property 
