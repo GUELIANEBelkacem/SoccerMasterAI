@@ -17,6 +17,7 @@ class SuperState(object):
     hoha2=0
     hoha3=0
     hoha4=0
+    runorhit=0
     def __init__(self,state,id_team,id_player):
         self.state=state
         self.id_team=id_team
@@ -238,7 +239,8 @@ class SuperState(object):
     def shouldipass(self):
         l=[]
         a=False
-        if(self.dgoal>GAME_WIDTH*0.25):
+        #0.31
+        if(self.dgoal>GAME_WIDTH*0.31):
             for joueur in self.state.players:
                 if(joueur[0]==((self.id_team%2)+1)):
                     l.append(self.state.player_state(joueur[0], joueur[1]).position)
@@ -250,14 +252,73 @@ class SuperState(object):
         return a
     
     @property 
-    def ami(self):
+    def amid(self):
         a=False
-        if(self.dball<PLAYER_RADIUS+BALL_RADIUS+20):
+        if(self.dball<20):
             a=True
         
         return a
+    
+    @property 
+    def amig(self):
+        a=False
+        if(self.dball<20):
+            a=True
+        
+        return a
+    
+    @property
+    def closefriend(self):
+        a=self.poplayerfr
+        l=[]
+        ll=[]
+        for joueur in self.state.players:
+            if(joueur[0]==self.id_team and joueur[1]!=self.id_player):
+                if(abs((self.goal-self.player).x)>abs((self.goal-self.state.player_state(joueur[0], joueur[1]).position).x)):
+                    l.append(self.state.player_state(joueur[0], joueur[1]).position)
+        
+        for joueur in self.state.players:
+            if(joueur[0]==((self.id_team%2)+1)):
+                if(abs((self.goal-self.player).x)>abs((self.goal-self.state.player_state(joueur[0], joueur[1]).position).x)):
+                    ll.append(self.state.player_state(joueur[0], joueur[1]).position)
+                
+                
+    
+        if(len(l)==0):
+            if(len(ll)<2):
+                SuperState.runorhit=1
+                return a
+            else:
+                SuperState.runorhit=1
+                return a
+        else:
+            SuperState.runorhit=0
+            a=l[0]
+            for e in l:
+                if (abs((self.goal-a).x)<abs((self.goal-e).x)):
+                    a=e
+            return a        
+    @property    
+    def hitorrun(self):
+ a=self.poplayerfr
+        l=[]
+        ll=[]
+        for joueur in self.state.players:
+            if(joueur[0]==self.id_team and joueur[1]!=self.id_player):
+                if(abs((self.goal-self.player).x)>abs((self.goal-self.state.player_state(joueur[0], joueur[1]).position).x)):
+                    l.append(self.state.player_state(joueur[0], joueur[1]).position)
+        
+        for joueur in self.state.players:
+            if(joueur[0]==((self.id_team%2)+1)):
+                if(abs((self.goal-self.player).x)>abs((self.goal-self.state.player_state(joueur[0], joueur[1]).position).x)):
+                    ll.append(self.state.player_state(joueur[0], joueur[1]).position)
+        
+        if(len(l)==0):
+                return 1
+        else:
+            return 0        
             
-            
+        
         
         
 
@@ -265,6 +326,7 @@ class SuperState(object):
     @property
     def anticiperx(self):
         return abs(self.my_goal.x-GAME_WIDTH*3/8)
+                            if (abs((self.goal-self.player).x)<abs((self.goal-a).x)):
 '''        
 '''    
     @property

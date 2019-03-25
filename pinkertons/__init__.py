@@ -16,9 +16,9 @@ def get_team(nb_players):
     if nb_players == 2:
         team.add( "Player 1" , AttaquantStrategy())
         team.add("Player 2", DefonceurStrategy())
-	if nb_players == 4:
-		team.add( "Player 1" , AttaquantStrategy())
-		team.add("Player 2", DefonceurStrategy())
-		team.add("Player 3", CoteStrategyd())
-		team.add("Player 4", CoteStrategyg())
+    if nb_players == 4:
+        m.add( "Player 1" , AttaquantStrategy())
+        m.add("Player 2", DefonceurStrategy())
+        m.add("Player 3", CoteStrategyd())
+        m.add("Player 4", CoteStrategyg())
     return team
