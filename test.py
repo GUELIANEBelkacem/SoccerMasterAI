@@ -17,9 +17,9 @@ team2 = SoccerTeam(name="Team 2")
 
 team1.add("Attaquant", FonceurStrategy())  # Random strategy
 team1.add("Defenceur",DefonceurStrategy())
-team1.add("wing1", StaticStrategy())   # Static strategy
-team1.add("wing2",StaticStrategy())# Static strategy
-team2.add("Fonceur", AttaquantStrategy())   # Static strategy
+team1.add("wing1", CoteStrategyd())   # Static strategy
+team1.add("wing2",CoteStrategyg())# Static strategy
+team2.add("Fonceur", AttaquantStrategy4())   # Static strategy
 team2.add("Defenceur",DefonceurStrategy())# Static strategy
 team2.add("wing d", CoteStrategyd())   # Static strategy
 team2.add("wing g",CoteStrategyg())# Static strategy

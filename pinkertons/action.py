@@ -19,6 +19,12 @@ class Move(object):
         return SoccerAction(acceleration=(self.superstate.betweend-self.superstate.player)*999)
     def to_betweeng(self):
         return SoccerAction(acceleration=(self.superstate.betweeng-self.superstate.player)*999)
+    def to_rank2(self):
+        return SoccerAction(acceleration=(self.superstate.anticiper2-self.superstate.player)*999)
+    def to_rank3(self):
+        return SoccerAction(acceleration=(self.superstate.anticiper3-self.superstate.player)*999)
+    def to_rank4(self):
+        return SoccerAction(acceleration=(self.superstate.anticiper4-self.superstate.player)*999)
     
     
 class Shoot(object):

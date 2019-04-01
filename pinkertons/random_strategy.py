@@ -20,6 +20,25 @@ class AttaquantStrategy(Strategy):
         m=Move(s)
         sh=Shoot(s)
         return m.to_ball()+sh.to_goal(self.forcet)
+    
+    
+class AttaquantStrategy4(Strategy):
+    def __init__(self,strength=5.1,forcet=1):
+        Strategy.__init__(self, "Attaquant")
+        self.strength=strength
+        self.forcet=forcet
+        
+
+    def compute_strategy(self, state, id_team, id_player):
+        # id_team is 1 or 2
+        # id_player starts at 0
+        s=SuperState(state,id_team,id_player)
+        m=Move(s)
+        sh=Shoot(s)
+        if(s.hitorrun == True):
+            return m.to_ball()+sh.to_goal(self.forcet)
+        else:
+            return m.to_rank4()+sh.to_goal(self.forcet)
 
 class DefonceurStrategy(Strategy):
     def __init__(self):
@@ -112,7 +131,7 @@ class CoteStrategyg(Strategy):
                     return m.to_ball()+sh.to_goal(self.forcet) 
         else:
             return m.to_ball()+sh.to_goal(self.forcet)
-'''                
+                
 class CoteStrategyd(Strategy):
     def __init__(self,forcet=1):
         Strategy.__init__(self, "wing")
@@ -169,8 +188,46 @@ class CoteStrategyg(Strategy):
                     else:
                         return m.to_betweeng()+sh.to_pass()
         
+'''
+class CoteStrategyd(Strategy):
+    def __init__(self,forcet=1):
+        Strategy.__init__(self, "wing")
+        self.forcet=forcet
 
-                
+    def compute_strategy(self, state, id_team, id_player):
+        # id_team is 1 or 2
+        # id_player starts at 0
+        s=SuperState(state,id_team,id_player)
+        m=Move(s)
+        sh=Shoot(s)
+        if(abs(s.ball.x-s.anticiperx2)<GAME_WIDTH*0.3 and s.ball.y<GAME_HEIGHT*0.4):
+            return m.to_ball()+sh.to_pass()           
+        else:
+            return m.to_rank2()+sh.to_pass()
+
+
+
+class CoteStrategyg(Strategy):
+    def __init__(self,forcet=1):
+        Strategy.__init__(self, "wing")
+        self.forcet=forcet
+
+    def compute_strategy(self, state, id_team, id_player):
+        # id_team is 1 or 2
+        # id_player starts at 0
+        s=SuperState(state,id_team,id_player)
+        m=Move(s)
+        sh=Shoot(s)
+        if(s.hitorrun == False):
+            if(abs(s.ball.x-s.anticiperx3)<GAME_WIDTH*0.3 and s.ball.y>GAME_HEIGHT*0.6):
+                return m.to_ball()+sh.to_pass()           
+            else:
+                return m.to_rank3()+sh.to_pass()
+        else:
+            return m.to_ball()+sh.to_goal(self.forcet)
+
+
+
 class StaticStrategy(Strategy):
     def __init__(self,forcet=1):
         Strategy.__init__(self, "wing")

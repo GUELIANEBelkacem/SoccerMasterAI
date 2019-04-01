@@ -166,8 +166,14 @@ class SuperState(object):
                 l.append(li)
                 
         l.sort(key=lambda l:l[0])
-        l.pop()
-        l.pop()
+        if(len(l)==4):
+            l.pop()
+            l.pop()
+        if(len(l)==3):
+            l.pop()
+        if(len(l)==1):
+            l[1][0]=l[0][0]
+            l[1][1]=l[0][1]
         return l
     
     
@@ -180,8 +186,14 @@ class SuperState(object):
                 l.append(li)
                 
         l.sort(key=lambda l:l[0], reverse=True)
-        l.pop()
-        l.pop()
+        if(len(l)==4):
+            l.pop()
+            l.pop()
+        if(len(l)==3):
+            l.pop()
+        if(len(l)==1):
+            l[1][0]=l[0][0]
+            l[1][1]=l[0][1]
         return l
     @property 
     def betweend(self):
@@ -285,7 +297,7 @@ class SuperState(object):
             a=True
         
         return a
-    
+    '''
     @property
     def closefriend(self):
         a=self.poplayerfr
@@ -316,7 +328,15 @@ class SuperState(object):
             for e in l:
                 if (abs((self.goal-a).x)<abs((self.goal-e).x)):
                     a=e
-            return a        
+            return a 
+    '''
+    @property
+    def closefriend(self):
+        l=self.friend_list
+        if(l.index([self.player,self.id_player,(self.player-self.goal).norm])+1>3):
+            return l[3][0]
+        else:
+            return l[l.index([self.player,self.id_player,(self.player-self.goal).norm])+1][0]
     @property    
     def hitorrun(self):
         a=self.poplayerfr
@@ -336,6 +356,82 @@ class SuperState(object):
                 return True
         else:
             return False   
+        
+        
+#strategy change
+    
+    @property    
+    def friend_list(self):
+        l=[]
+   
+        for joueur in self.state.players:
+            if(joueur[0]==self.id_team ):
+                    li=[self.state.player_state(joueur[0], joueur[1]).position,joueur[1],(self.state.player_state(joueur[0], joueur[1]).position-self.goal).norm]
+                    l.append(li)
+        l.sort(key=lambda l:l[2], reverse=True)
+        return l
+    
+
+    @property    
+    def enemy_list(self):  
+        l=[]
+        for joueur in self.state.players:
+            if(joueur[0]==((self.id_team%2)+1)):
+                    li=[self.state.player_state(joueur[0], joueur[1]).position,joueur[1],(self.state.player_state(joueur[0], joueur[1]).position-self.goal).norm]
+                    l.append(li)
+        l.sort(key=lambda l:l[2], reverse=True)
+        return l
+        
+        
+    @property
+    def anticiperx2(self):
+        return abs(self.my_goal.x-GAME_WIDTH*4/10)
+    
+    @property
+    def anticiperx3(self):
+        return abs(self.my_goal.x-GAME_WIDTH*0.65)
+    
+    @property
+    def anticiperx4(self):
+        return abs(self.my_goal.x-GAME_WIDTH*0.8)
+    
+    @property 
+    def anticiper2(self):
+        l=self.friend_list
+        ll=self.enemy_list
+        if(abs(ll[0][0].x - self.my_goal.x) < abs(self.anticiperx2 - self.my_goal.x) and abs(ll[1][0].x - self.my_goal.x) > abs(self.anticiperx2 - self.my_goal.x)):
+            a=(ll[0][0].y-ll[1][0].y)/(ll[0][0].x-ll[1][0].x+1)
+            b=ll[0][0].y-a*ll[0][0].x
+            y=a*self.anticiperx2+b
+            return Vector2D(self.anticiperx2,y)
+        else:
+            return Vector2D(self.anticiperx2,abs(GAME_HEIGHT*(self.id_team+1)%2 - GAME_HEIGHT*0.2))
+   
+    @property
+    def anticiper3(self):
+        l=self.friend_list
+        ll=self.enemy_list
+        if(abs(ll[1][0].x - self.my_goal.x) < abs(self.anticiperx3 - self.my_goal.x) and abs(ll[2][0].x - self.my_goal.x) > abs(self.anticiperx3 - self.my_goal.x)):
+            a=(ll[1][0].y-ll[2][0].y)/(ll[1][0].x-ll[2][0].x+1)
+            b=ll[1][0].y-a*ll[1][0].x
+            y=a*self.anticiperx3+b
+            return Vector2D(self.anticiperx3,y)
+        else:
+            return Vector2D(self.anticiperx3,abs(GAME_HEIGHT*(self.id_team+1)%2 - GAME_HEIGHT*0.8))
+    
+    @property
+    def anticiper4(self):
+        l=self.friend_list
+        ll=self.enemy_list
+        if(abs(ll[2][0].x - self.my_goal.x) < abs(self.anticiperx4 - self.my_goal.x) and abs(ll[3][0].x - self.my_goal.x) > abs(self.anticiperx4 - self.my_goal.x)):
+            a=(ll[2][0].y-ll[3][0].y)/(ll[2][0].x-ll[3][0].x+1)
+            b=ll[2][0].y-a*ll[2][0].x
+            y=a*self.anticiperx4+b
+            return Vector2D(self.anticiperx4,y)
+        else:
+            return Vector2D(self.anticiperx4,abs(GAME_HEIGHT*(self.id_team+1)%2 - GAME_HEIGHT*0.5))
+
+        
             
         
         
