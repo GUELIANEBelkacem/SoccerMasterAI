@@ -41,6 +41,9 @@ class SuperState(object):
     def dgoal(self):
         return (self.goal-self.player).norm
     @property
+    def dgoaly(self):
+        return abs((self.goal-self.player).y)
+    @property
     def dball(self):
         return (self.ball-self.player).norm
     @property
@@ -112,8 +115,8 @@ class SuperState(object):
         return a
     @property 
     def pass_alpha(self):
-        a=self.dplayerfr*3.5
-        return a+10
+        a=(self.closefriend-self.player).norm*2.2+15
+        return a
     
     @property
     def anticiper(self):
@@ -252,17 +255,33 @@ class SuperState(object):
         return a
     
     @property 
-    def amid(self):
+    def amitwod(self):
         a=False
-        if(self.dball<20):
+        if(self.dball<0):
             a=True
         
         return a
     
     @property 
+    def amitwog(self):
+        a=False
+        if(self.dball<0):
+            a=True
+        
+        return a
+    
+    @property 
+    def amid(self):
+        a=False
+        if((self.state.player_state(((self.id_team%2)+1), SuperState.hoha1).position+(self.state.player_state(((self.id_team%2)+1),SuperState.hoha2).position-self.state.player_state(((self.id_team%2)+1), SuperState.hoha1).position)/2-self.state.ball.position).norm < ((self.state.player_state(((self.id_team%2)+1),SuperState.hoha2).position-self.state.player_state(((self.id_team%2)+1), SuperState.hoha1).position)/2).norm + 5 ):
+            a=True
+        
+        return a
+
+    @property 
     def amig(self):
         a=False
-        if(self.dball<20):
+        if((self.state.player_state(((self.id_team%2)+1), SuperState.hoha3).position+(self.state.player_state(((self.id_team%2)+1),SuperState.hoha4).position-self.state.player_state(((self.id_team%2)+1), SuperState.hoha3).position)/2-self.state.ball.position).norm < ((self.state.player_state(((self.id_team%2)+1),SuperState.hoha4).position-self.state.player_state(((self.id_team%2)+1), SuperState.hoha3).position)/2).norm + 5 ):
             a=True
         
         return a
@@ -300,7 +319,7 @@ class SuperState(object):
             return a        
     @property    
     def hitorrun(self):
- a=self.poplayerfr
+        a=self.poplayerfr
         l=[]
         ll=[]
         for joueur in self.state.players:
@@ -314,9 +333,9 @@ class SuperState(object):
                     ll.append(self.state.player_state(joueur[0], joueur[1]).position)
         
         if(len(l)==0):
-                return 1
+                return True
         else:
-            return 0        
+            return False   
             
         
         

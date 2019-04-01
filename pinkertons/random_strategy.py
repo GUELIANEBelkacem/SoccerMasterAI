@@ -67,7 +67,7 @@ class FonceurStrategy(Strategy):
             return SoccerAction(s.ball-s.player,s.goal-s.player)
 
 
-
+'''
 class CoteStrategyd(Strategy):
     def __init__(self,forcet=1):
         Strategy.__init__(self, "wing")
@@ -79,6 +79,7 @@ class CoteStrategyd(Strategy):
         s=SuperState(state,id_team,id_player)
         m=Move(s)
         sh=Shoot(s)
+        print(s.amid)
         if(s.hitorrun==0):
             if(s.amid==False):
                 return m.to_betweend()+sh.to_goal(self.forcet)
@@ -89,8 +90,7 @@ class CoteStrategyd(Strategy):
                     return m.to_ball()+sh.to_goal(self.forcet)
         else:
             return m.to_ball()+sh.to_goal(self.forcet)
-                
-        
+            
 class CoteStrategyg(Strategy):
     def __init__(self,forcet=1):
         Strategy.__init__(self, "wing")
@@ -112,6 +112,64 @@ class CoteStrategyg(Strategy):
                     return m.to_ball()+sh.to_goal(self.forcet) 
         else:
             return m.to_ball()+sh.to_goal(self.forcet)
+'''                
+class CoteStrategyd(Strategy):
+    def __init__(self,forcet=1):
+        Strategy.__init__(self, "wing")
+        self.forcet=forcet
+
+    def compute_strategy(self, state, id_team, id_player):
+        # id_team is 1 or 2
+        # id_player starts at 0
+        s=SuperState(state,id_team,id_player)
+        m=Move(s)
+        sh=Shoot(s)
+        if(s.dgoal<GAME_WIDTH*3/10):
+            return m.to_ball()+sh.to_goal(self.forcet)
+        else:
+            if(s.dgoal<GAME_WIDTH*6/10):
+                if(s.hitorrun == True):
+                    return m.to_ball()+sh.to_goal(self.forcet)
+                else:
+                    if(s.amid == True):
+                        return m.to_ball()+sh.to_pass()
+                    else:
+                        return m.to_betweend()+sh.to_pass()
+            else:
+                    if(s.amid == True):
+                        return m.to_ball()+sh.to_pass()
+                    else:
+                        return m.to_betweend()+sh.to_pass()
+
+class CoteStrategyg(Strategy):
+    def __init__(self,forcet=1):
+        Strategy.__init__(self, "wing")
+        self.forcet=forcet
+
+    def compute_strategy(self, state, id_team, id_player):
+        # id_team is 1 or 2
+        # id_player starts at 0
+        s=SuperState(state,id_team,id_player)
+        m=Move(s)
+        sh=Shoot(s)
+        if(s.dgoal<GAME_WIDTH*3/10):
+            return m.to_ball()+sh.to_goal(self.forcet)
+        else:
+            if(s.dgoal<GAME_WIDTH*6/10):
+                if(s.hitorrun == True):
+                    return m.to_ball()+sh.to_goal(self.forcet)
+                else:
+                    if(s.amig == True):
+                        return m.to_ball()+sh.to_pass()
+                    else:
+                        return m.to_betweeng()+sh.to_pass()
+            else:
+                    if(s.amig == True):
+                        return m.to_ball()+sh.to_pass()
+                    else:
+                        return m.to_betweeng()+sh.to_pass()
+        
+
                 
 class StaticStrategy(Strategy):
     def __init__(self,forcet=1):
@@ -122,6 +180,19 @@ class StaticStrategy(Strategy):
         # id_team is 1 or 2
         # id_player starts at 0
         return SoccerAction() 
+    
+class PassStrategy(Strategy):
+    def __init__(self,forcet=1):
+        Strategy.__init__(self, "wing")
+        self.forcet=forcet
+
+    def compute_strategy(self, state, id_team, id_player):
+        # id_team is 1 or 2
+        # id_player starts at 0
+        s=SuperState(state,id_team,id_player)
+        m=Move(s)
+        sh=Shoot(s)
+        return m.to_ball()+sh.to_pass() 
         
 
 '''       

@@ -6,7 +6,7 @@ Created on Mon Feb 18 16:21:37 2019
 @author: 3804546
 """
 
-from .random_strategy import AttaquantStrategy, DefonceurStrategy, FonceurStrategy,CoteStrategyd, CoteStrategyg, StaticStrategy
+from .random_strategy import AttaquantStrategy, DefonceurStrategy, FonceurStrategy,CoteStrategyd, CoteStrategyg, StaticStrategy, PassStrategy
 from soccersimulator import SoccerTeam
 
 def get_team(nb_players):
@@ -17,8 +17,8 @@ def get_team(nb_players):
         team.add( "Player 1" , AttaquantStrategy())
         team.add("Player 2", DefonceurStrategy())
     if nb_players == 4:
-        m.add( "Player 1" , AttaquantStrategy())
-        m.add("Player 2", DefonceurStrategy())
-        m.add("Player 3", CoteStrategyd())
-        m.add("Player 4", CoteStrategyg())
+        team.add( "Player 1" , AttaquantStrategy())
+        team.add("Player 2", DefonceurStrategy())
+        team.add("Player 3", CoteStrategyd())
+        team.add("Player 4", CoteStrategyg())
     return team

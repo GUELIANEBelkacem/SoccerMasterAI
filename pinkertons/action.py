@@ -41,15 +41,25 @@ class Shoot(object):
                 if(self.superstate.ball.x==GAME_WIDTH/2)and(self.superstate.ball.y==GAME_HEIGHT/2):
                     Shoot.hoha=1
                 return SoccerAction()
-        
+    '''    
     def to_pass(self):
         strength=0.032
         if (self.superstate.dball<PLAYER_RADIUS+BALL_RADIUS):
-            print("1111111111111111111111111111")
             return SoccerAction(shoot = 3*Vector2D(((self.superstate.closefriend-self.superstate.player).normalize()*strength*self.superstate.pass_alpha).x,((self.superstate.closefriend-self.superstate.player).normalize()*strength*self.superstate.pass_alpha).y+((self.superstate.goal-self.superstate.player).normalize()*strength*self.superstate.alpha).y/4))
         else:
             return SoccerAction()
+            +((self.superstate.goal-self.superstate.player).normalize()*strength*self.superstate.alpha).y/10)
+    '''
+    def to_pass(self):
+        strength=0.032
+        if (self.superstate.dball<PLAYER_RADIUS+BALL_RADIUS):
+            return SoccerAction(shoot = (self.superstate.closefriend-self.superstate.player).normalize()*strength*self.superstate.pass_alpha+(self.superstate.goal-self.superstate.player).normalize()*strength*self.superstate.alpha/10)
+        else:
+            return SoccerAction()
         
+
+
+    
     def to_defend(self):
         strength=0.032
         if (self.superstate.dball<PLAYER_RADIUS+BALL_RADIUS):
