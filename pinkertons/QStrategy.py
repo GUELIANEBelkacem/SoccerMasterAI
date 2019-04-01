@@ -3,6 +3,7 @@ from soccersimulator.settings import*
 import numpy as np
 import numpy.linalg as la
 import math
+from .tools import SuperState
 
 class QStrategy(Strategy):
     def __init__ ( self ):

@@ -3,6 +3,7 @@ from soccersimulator.settings import*
 import numpy as np
 import numpy.linalg as la
 import math
+from numpy.random import choice
 
 class QLearning(object):
     def __init__(self,strategy,simu=None,max_steps=1000000,max_round_step =100,monte_carlo = False):
@@ -14,7 +15,7 @@ class QLearning(object):
     def start(self,show = True,fps = None):
         if not self.simu:
             team1 = SoccerTeam ("Team 1")
-            team2 = SoccerTeam ( " Team ␣ 2 " )
+            team2 = SoccerTeam ("Team 2")
             team1.add(self.strategy.name,self.strategy)
             team2.add(Strategy().name,Strategy())
             self.simu = Simulation(team1,team2,max_steps = self.max_steps)
@@ -102,7 +103,7 @@ class QLearning(object):
             prob = None
         else :
             prob /= prob.sum ()
-        return choice (list(self.strategy.strategy_names),p = prob)
+        return choice(list(self.strategy.strategy_names),p = prob)
 
 
 

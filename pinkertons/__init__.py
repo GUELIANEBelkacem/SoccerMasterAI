@@ -8,6 +8,8 @@ Created on Mon Feb 18 16:21:37 2019
 
 from .random_strategy import AttaquantStrategy, DefonceurStrategy, FonceurStrategy,CoteStrategyd, CoteStrategyg, StaticStrategy, PassStrategy
 from soccersimulator import SoccerTeam
+from .QLearning import *
+from .QStrategy import *
 
 def get_team(nb_players):
     team = SoccerTeam(name ="pinkertons" )
