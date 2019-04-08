@@ -1,4 +1,5 @@
-1.2
+1.2)
+
 l'idée c'est de creer un joueur qui tire DOUCEMENT  si le ballon et a GAMEWIDTH/3 du 
 la limite de son terrain et il tire fort sinon 
 
@@ -13,16 +14,19 @@ la fonction Move.wait(ratio) permet de faire attendre le joueur à une distance 
 et d'enticiper (trouver y) le mouvement du ballon par rappor au goal 
 
 
-1.3
+1.3)
+
 le défenseur attend sur 0.25*GAMEWIDTH de son goal (car le ballon va etre tiré loin ) il cherche
 le ballon et --important-- il le tire vers l'autre coté -cette fonctionalité va etre remplacer par des passes en 2v2
 
 
-1.4
+1.4)
+
 le joueur UnVsUn est une combainaison du Defense et attaque (position du défense et le tire de l'attaque)
 
 
-1.5
+1.5)
+
 
 on creer des nouvelles strategies un peut modifier au niveur de tools pour eviter les erreurs
 
@@ -31,6 +35,10 @@ on ajoute la fonctionalité Shoot.tp_passv() à notre defenseur
 le défensseur cherche le ballon et le pass ver l'attaquant si le ballon est à GAMEWIDTH/3 ou moins du goal
 
 l'attaquant tire le ballon vers l'adversaire 
+et comme l'attaquant anticipe le mouvement du ballon il est aussi un "Middle Blocker"
 
+
+//////////////////
 il est utile d'ajoute un peut d'aleatoire au tires de l'attaquant mais vu que on a deja 
-le bruit ajouté automatiquement par le jeux on évite plus d'erreur à peur de toucher les limites de terrain
+le bruit ajouté automatiquement par le jeux on évite plus d'erreur à peur de toucher 
+les limites de terrain
