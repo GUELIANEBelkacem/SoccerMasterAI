@@ -9,7 +9,8 @@ class Move(object):
         self.superstate=superstate
 
         
-        
+    def to_dif(self):
+        return SoccerAction(acceleration=(self.superstate.anticiperdif -self.superstate.player)*999)
     def to_ball(self):
         return SoccerAction(acceleration=(self.superstate.ball-self.superstate.player+self.superstate.anticiper)*999)
     
@@ -31,6 +32,9 @@ class Shoot(object):
     hoha=1
     def __init__(self,superstate):
         self.superstate=superstate
+        
+        
+
     def to_goal(self,forcet):
 
         forcet=1

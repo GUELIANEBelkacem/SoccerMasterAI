@@ -385,7 +385,7 @@ class SuperState(object):
         
     @property
     def anticiperx2(self):
-        return abs(self.my_goal.x-GAME_WIDTH*4/10)
+        return abs(self.my_goal.x-GAME_WIDTH*3/10)
     
     @property
     def anticiperx3(self):
@@ -393,7 +393,7 @@ class SuperState(object):
     
     @property
     def anticiperx4(self):
-        return abs(self.my_goal.x-GAME_WIDTH*0.75)
+        return abs(self.my_goal.x-GAME_WIDTH*0.85)
     
     @property 
     def anticiper2(self):
@@ -433,7 +433,19 @@ class SuperState(object):
 
         
             
-        
+    @property
+    def anticiperxdif(self):
+        return abs(self.my_goal.x-GAME_WIDTH*0.1)
+    
+    
+    @property
+    def anticiperdif(self):
+            p = self.poplayeren
+            a=(p.y-self.my_goal.y)/(p.x-self.my_goal.x+1)
+            b=self.my_goal.y-a*self.my_goal.x
+            y=a*self.anticiperxdif+b
+            return Vector2D(self.anticiperxdif,y)
+
         
         
 

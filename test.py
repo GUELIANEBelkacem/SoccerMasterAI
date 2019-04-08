@@ -14,17 +14,15 @@ team2 = SoccerTeam(name="Team 2")
 
 
 # Add players
-
-team1.add("Attaquant", FonceurStrategy())  # Random strategy
-team1.add("Defenceur",DefonceurStrategy())
+team1.add("Defenceur",DefonceurStrategy4())
+team1.add("Attaquant", AttaquantStrategy4())  # Random strategy
 team1.add("wingd", StaticStrategy())   # Static strategy
 team1.add("wingg",StaticStrategy())# Static strategy
 
-team2.add("Defenceur",DefonceurStrategy4())# Static strategy
-team2.add("wing g",CoteStrategyg())
-team2.add("wing d", CoteStrategyd())   # Static strategy
-
-team2.add("Fonceur", AttaquantStrategy4())   # Static strategy# Static strategy
+team2.add("Defenceur----",DefonceurStrategy5())# Static strategy
+team2.add("wing g----",CoteStrategyg5())
+team2.add("wing d----", CoteStrategyd5())   # Static strategy
+team2.add("Fonceur4----", AttaquantStrategy5())   # Static strategy# Static strategy
 
 
 # Create a match

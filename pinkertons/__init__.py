@@ -6,7 +6,7 @@ Created on Mon Feb 18 16:21:37 2019
 @author: 3804546
 """
 
-from .random_strategy import AttaquantStrategy, DefonceurStrategy, FonceurStrategy,CoteStrategyd, CoteStrategyg, StaticStrategy, PassStrategy, AttaquantStrategy4, DefonceurStrategy4
+from .random_strategy import AttaquantStrategy, DefonceurStrategy, FonceurStrategy,CoteStrategyd, CoteStrategyg, StaticStrategy, PassStrategy, AttaquantStrategy4, DefonceurStrategy4,CoteStrategyd4, CoteStrategyg4, AttaquantStrategy5,CoteStrategyd5, CoteStrategyg5, DefonceurStrategy5
 from soccersimulator import SoccerTeam
 from .QLearning import *
 from .QStrategy import *
