@@ -26,6 +26,8 @@ class Move(object):
         return SoccerAction(acceleration=(self.superstate.anticiper3-self.superstate.player)*999)
     def to_rank4(self):
         return SoccerAction(acceleration=(self.superstate.anticiper4-self.superstate.player)*999)
+    def to_wait(self,ratio):
+        return SoccerAction(acceleration=(self.superstate.anticiperwait(ratio)-self.superstate.player)*999)
     
     
 class Shoot(object):
@@ -35,7 +37,7 @@ class Shoot(object):
         
     def to_enemy(self):
         if (self.superstate.dball<PLAYER_RADIUS+BALL_RADIUS):
-            return SoccerAction(shoot = (self.superstate.poplayeren-self.superstate.player).normalize()*self.superstate.enemy_alpha*0.05)
+            return SoccerAction(shoot = (self.superstate.poplayeren-self.superstate.player).normalize()*self.superstate.enemy_alpha*0.04)
         else:
             return SoccerAction()
         
@@ -79,7 +81,19 @@ class Shoot(object):
             return SoccerAction(shoot = (self.superstate.goal-self.superstate.player)*9999)
         else:
             return SoccerAction()
+    def to_attaque2(self):
+        strength=0.032
+        if (self.superstate.dball<PLAYER_RADIUS+BALL_RADIUS):
+            return SoccerAction(shoot = (self.superstate.goal-self.superstate.player).normalize()*2.5)
+        else:
+            return SoccerAction()
         
+    def to_passv(self):
+        strength=0.032
+        if (self.superstate.dball<PLAYER_RADIUS+BALL_RADIUS):
+            return SoccerAction(shoot = (self.superstate.poplayerfr-self.superstate.player).normalize()*strength*self.superstate.pass_alpha2)
+        else:
+            return SoccerAction()
 
 
     

@@ -12,8 +12,8 @@ team1 = SoccerTeam(name="Team 1")
 team2 = SoccerTeam(name="Team 2")
 
 
-team1.add("Player 1", Echauffement())  
-team2.add("Player 2", Echauffement())  
+team1.add("Player 1", UnVsUn())  
+team2.add("Player 2", UnVsUn())  
 
 
 simu = VolleySimulation(team1, team2)

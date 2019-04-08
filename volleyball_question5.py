@@ -4,7 +4,7 @@ from soccersimulator.settings import*
 from pinkertons.tools import*
 from pinkertons.Simu import*
 from pinkertons.action import*
-from volleyballstrategies import Echauffement,Attaque,Defense,UnVsUn
+from volleyballstrategies import Echauffement,Attaque,Defense,UnVsUn,Defense2,Attaque2
 import math
 
 
@@ -12,8 +12,10 @@ team1 = SoccerTeam(name="Team 1")
 team2 = SoccerTeam(name="Team 2")
 
 
-team1.add("Player 1", Echauffement())  
-team2.add("Player 2", Echauffement())  
+team1.add("Defense", Defense2())  
+team1.add("Attaque", Attaque2()) 
+team2.add("Defense", Defense2()) 
+team2.add("Attaque", Attaque2())  
 
 
 simu = VolleySimulation(team1, team2)

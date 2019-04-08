@@ -117,6 +117,10 @@ class SuperState(object):
     def pass_alpha(self):
         a=(self.closefriend-self.player).norm*2.2+15
         return a
+    @property
+    def pass_alpha2(self):
+        a=(self.poplayerfr-self.player).norm*2.2+15
+        return a
     @property 
     def enemy_alpha(self):
         a=(self.poplayeren-self.player).norm*2.2+15
@@ -449,6 +453,17 @@ class SuperState(object):
             b=self.my_goal.y-a*self.my_goal.x
             y=a*self.anticiperxdif+b
             return Vector2D(self.anticiperxdif,y)
+        
+
+    def anticiperxwait(self,ratio):
+        return abs(self.my_goal.x-GAME_WIDTH*ratio)
+
+    def anticiperwait(self,ratio):
+            p = self.poplayeren
+            a=(p.y-self.my_goal.y)/(p.x-self.my_goal.x+1)
+            b=self.my_goal.y-a*self.my_goal.x
+            y=a*self.anticiperxwait(ratio)+b
+            return Vector2D(self.anticiperxwait(ratio),y)
 
         
         
