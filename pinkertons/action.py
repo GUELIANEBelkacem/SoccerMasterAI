@@ -88,6 +88,13 @@ class Shoot(object):
         else:
             return SoccerAction()
         
+    def to_attaque3(self,force):
+        strength=0.032
+        if (self.superstate.dball<PLAYER_RADIUS+BALL_RADIUS):
+            return SoccerAction(shoot = (self.superstate.goal-self.superstate.player).normalize()*2.5*force)
+        else:
+            return SoccerAction()
+        
     def to_passv(self):
         strength=0.032
         if (self.superstate.dball<PLAYER_RADIUS+BALL_RADIUS):

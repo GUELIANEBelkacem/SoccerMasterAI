@@ -115,7 +115,24 @@ class Defense2(Strategy):
         
         
         
-        
+class Attaque3(Strategy):
+    def __init__(self,force):
+        Strategy.__init__(self, "Attaque")
+        self.force=force
+
+    def compute_strategy(self, state, id_team, id_player):
+        s=SuperState(state,id_team,id_player)
+        m=Move(s)
+        sh=Shoot(s)
+                
+        if(abs((s.ball-s.my_goal).x)<GAME_WIDTH/2):
+            #return m.to_ball()+sh.to_attaque()
+            if(abs((s.ball-s.my_goal).x)<GAME_WIDTH/3):
+                return m.to_ball()+sh.to_attaque3(force)
+            else:
+                return m.to_ball()+sh.to_attaque()
+        else:
+            return m.to_wait(0.45)+sh.to_attaque()
         
         
         

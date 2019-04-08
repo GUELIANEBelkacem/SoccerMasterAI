@@ -37,6 +37,16 @@ le défensseur cherche le ballon et le pass ver l'attaquant si le ballon est à 
 l'attaquant tire le ballon vers l'adversaire 
 et comme l'attaquant anticipe le mouvement du ballon il est aussi un "Middle Blocker"
 
+1.6)
+on passe le parametre force à une copie de la méthode Shoot.to_attaque3(force) on genere la position du joueur aleatoirement et on compte le nombre des buts (critere)
+avec goalsearch
+
+on genere le vecteur des valeurs avec frange()
+
+milleur valleur autour 0.9
+
+
+
 
 //////////////////
 il est utile d'ajoute un peut d'aleatoire au tires de l'attaquant mais vu que on a deja 
