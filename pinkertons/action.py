@@ -33,6 +33,12 @@ class Shoot(object):
     def __init__(self,superstate):
         self.superstate=superstate
         
+    def to_enemy(self):
+        if (self.superstate.dball<PLAYER_RADIUS+BALL_RADIUS):
+            return SoccerAction(shoot = (self.superstate.poplayeren-self.superstate.player).normalize()*self.superstate.enemy_alpha*0.05)
+        else:
+            return SoccerAction()
+        
         
 
     def to_goal(self,forcet):
@@ -64,6 +70,13 @@ class Shoot(object):
         strength=0.032
         if (self.superstate.dball<PLAYER_RADIUS+BALL_RADIUS):
             return SoccerAction(shoot = (self.superstate.closefriend-self.superstate.player).normalize()*strength*self.superstate.pass_alpha+(self.superstate.goal-self.superstate.player).normalize()*strength*self.superstate.alpha/10)
+        else:
+            return SoccerAction()
+    
+    def to_attaque(self):
+        strength=0.032
+        if (self.superstate.dball<PLAYER_RADIUS+BALL_RADIUS):
+            return SoccerAction(shoot = (self.superstate.goal-self.superstate.player)*9999)
         else:
             return SoccerAction()
         
