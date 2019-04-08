@@ -389,11 +389,11 @@ class SuperState(object):
     
     @property
     def anticiperx3(self):
-        return abs(self.my_goal.x-GAME_WIDTH*0.65)
+        return abs(self.my_goal.x-GAME_WIDTH*0.6)
     
     @property
     def anticiperx4(self):
-        return abs(self.my_goal.x-GAME_WIDTH*0.8)
+        return abs(self.my_goal.x-GAME_WIDTH*0.75)
     
     @property 
     def anticiper2(self):
