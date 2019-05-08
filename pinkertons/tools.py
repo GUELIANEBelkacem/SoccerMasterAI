@@ -18,6 +18,8 @@ class SuperState(object):
     hoha3=0
     hoha4=0
     runorhit=0
+    tactic1=0
+    tactic2=0
     def __init__(self,state,id_team,id_player):
         self.state=state
         self.id_team=id_team
@@ -121,6 +123,12 @@ class SuperState(object):
     @property
     def anticiper(self):
         return self.dball*self.vball*(0.3)
+    #0.3
+    
+   
+    def anticipertest(self,avade):
+        a=avade*self.dball*self.vball
+        return a
     
     @property 
     def anticipery(self):
@@ -333,10 +341,10 @@ class SuperState(object):
     @property
     def closefriend(self):
         l=self.friend_list
-        if(l.index([self.player,self.id_player,(self.player-self.goal).norm])+1>3):
-            return l[3][0]
+        if(l.index([self.player,self.id_player,abs((self.player-self.goal).x)])+1>3):
+            return l[2][0]
         else:
-            return l[l.index([self.player,self.id_player,(self.player-self.goal).norm])+1][0]
+            return l[l.index([self.player,self.id_player,abs((self.player-self.goal).x)])+1][0]
     @property    
     def hitorrun(self):
         a=self.poplayerfr
@@ -366,7 +374,7 @@ class SuperState(object):
    
         for joueur in self.state.players:
             if(joueur[0]==self.id_team ):
-                    li=[self.state.player_state(joueur[0], joueur[1]).position,joueur[1],(self.state.player_state(joueur[0], joueur[1]).position-self.goal).norm]
+                    li=[self.state.player_state(joueur[0], joueur[1]).position,joueur[1],abs((self.state.player_state(joueur[0], joueur[1]).position-self.goal).x)]
                     l.append(li)
         l.sort(key=lambda l:l[2], reverse=True)
         return l
@@ -377,7 +385,7 @@ class SuperState(object):
         l=[]
         for joueur in self.state.players:
             if(joueur[0]==((self.id_team%2)+1)):
-                    li=[self.state.player_state(joueur[0], joueur[1]).position,joueur[1],(self.state.player_state(joueur[0], joueur[1]).position-self.goal).norm]
+                    li=[self.state.player_state(joueur[0], joueur[1]).position,joueur[1],abs((self.state.player_state(joueur[0], joueur[1]).position-self.goal).x)]
                     l.append(li)
         l.sort(key=lambda l:l[2], reverse=True)
         return l
@@ -385,11 +393,11 @@ class SuperState(object):
         
     @property
     def anticiperx2(self):
-        return abs(self.my_goal.x-GAME_WIDTH*3/10)
+        return abs(self.my_goal.x-GAME_WIDTH*0.25)
     
     @property
     def anticiperx3(self):
-        return abs(self.my_goal.x-GAME_WIDTH*0.6)
+        return abs(self.my_goal.x-GAME_WIDTH*0.67)
     
     @property
     def anticiperx4(self):
@@ -405,7 +413,11 @@ class SuperState(object):
             y=a*self.anticiperx2+b
             return Vector2D(self.anticiperx2,y)
         else:
-            return Vector2D(self.anticiperx2,abs(GAME_HEIGHT*(self.id_team+1)%2 - GAME_HEIGHT*0.2))
+            a=(ll[0][0].y-self.my_goal.y)/(ll[0][0].x-self.my_goal.x+1)
+            b=self.my_goal.y-a*self.my_goal.x
+            y=a*self.anticiperx2+b
+            return Vector2D(self.anticiperx2,y)
+            #return Vector2D(self.anticiperx2,abs(GAME_HEIGHT*(self.id_team+1)%2 - GAME_HEIGHT*0.2))
    
     @property
     def anticiper3(self):
@@ -417,7 +429,7 @@ class SuperState(object):
             y=a*self.anticiperx3+b
             return Vector2D(self.anticiperx3,y)
         else:
-            return Vector2D(self.anticiperx3,abs(GAME_HEIGHT*(self.id_team+1)%2 - GAME_HEIGHT*0.8))
+            return Vector2D(self.anticiperx3,abs(GAME_HEIGHT*(self.id_team+1)%2 - GAME_HEIGHT*0.835))
     
     @property
     def anticiper4(self):
@@ -435,7 +447,7 @@ class SuperState(object):
             
     @property
     def anticiperxdif(self):
-        return abs(self.my_goal.x-GAME_WIDTH*0.1)
+        return abs(self.my_goal.x-GAME_WIDTH*0.02)
     
     
     @property

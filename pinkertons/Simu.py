@@ -12,7 +12,7 @@ from .tools import*
 from sklearn.model_selection import ParameterGrid
 
 class GoalSearch(object):
-    def __init__(self,strategy,params,simu=None, trials=15,max_steps=1000000,max_round_step=40):
+    def __init__(self,strategy,params,simu=None, trials=30,max_steps=1000000000,max_round_step=100):
         self.strategy=strategy
         self.params=params.copy()
         self.simu=simu
@@ -48,10 +48,17 @@ class GoalSearch(object):
         ball = Vector2D.create_random(low=-30,high=30)
         ball.x+=GAME_WIDTH*8/10
         ball.y+=GAME_HEIGHT/2
+        a = Vector2D.create_random(low=-30,high=30)
+        a.x+=GAME_WIDTH*8/10
+        a.y+=GAME_HEIGHT/2
+        b = Vector2D.create_random(low=-30,high=30)
+        b.x+=GAME_WIDTH*8/10
+        b.y+=GAME_HEIGHT/2
         # Player and ball postion ( random )
-        self.simu.state.states[(1 , 0)].position = ball.copy() # Player position
+        self.simu.state.states[(1 , 0)].position = a # Player position
         self.simu.state.states[(1 , 0)].vitesse = Vector2D() # Player accelerati
         self.simu.state.ball.position = ball.copy() # Ball position
+        self.simu.state.ball.vitesse=b/4
         self.last_step = self.simu.step
         # Last step of the game
         # Set the current value for the current parameters
@@ -86,3 +93,5 @@ class GoalSearch(object):
 
     def get_best(self):
         return max(self.res, key=self.res.get)
+    #0.58
+    #0.71

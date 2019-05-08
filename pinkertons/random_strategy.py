@@ -6,11 +6,30 @@ from .Simu import*
 from .action import*
 import math
 
+class AttaquantStrategyt(Strategy):
+    def __init__(self,avade=None,strength=5.1,forcet=1):
+        Strategy.__init__(self, "Attaquant")
+        self.avade=avade
+        self.strength=strength
+        self.forcet=forcet
+        
+        
+
+    def compute_strategy(self, state, id_team, id_player):
+        # id_team is 1 or 2
+        # id_player starts at 0
+        s=SuperState(state,id_team,id_player)
+        m=Move(s)
+        sh=Shoot(s)
+        return m.to_balltest(self.avade)+sh.to_goal(self.forcet)
+
 class AttaquantStrategy(Strategy):
     def __init__(self,strength=5.1,forcet=1):
         Strategy.__init__(self, "Attaquant")
+      
         self.strength=strength
         self.forcet=forcet
+        
         
 
     def compute_strategy(self, state, id_team, id_player):
@@ -377,7 +396,7 @@ class CoteStrategyd5(Strategy):
         s=SuperState(state,id_team,id_player)
         m=Move(s)
         sh=Shoot(s)
-        if(abs(s.ball.x-s.anticiperx2)<GAME_WIDTH*0.35 and s.ball.y<GAME_HEIGHT*0.49):
+        if(abs(s.ball.x-s.anticiperx2)<GAME_WIDTH*0.25):
             return m.to_ball()+sh.to_pass()           
         else:
             return m.to_rank2()+sh.to_pass()
@@ -395,10 +414,20 @@ class CoteStrategyg5(Strategy):
         s=SuperState(state,id_team,id_player)
         m=Move(s)
         sh=Shoot(s)
+        #print(SuperState.tactic1)
 
-        if(abs(s.ball.x-s.anticiperx3)<GAME_WIDTH*0.35 and s.ball.y>GAME_HEIGHT*0.58):
-            return m.to_ball()+sh.to_pass()           
+        if((abs(s.ball.x-s.goal.x)<GAME_WIDTH*0.4995 and s.ball.y>GAME_HEIGHT*0.45) or (abs(s.ball.x-s.goal.x)>GAME_WIDTH*0.5 and abs(s.ball.x-s.goal.x)<GAME_WIDTH*0.55 and s.ball.y>GAME_HEIGHT*0.45)):
+            if(s.hitorrun==True):
+                return m.to_ball()+sh.to_goal(self.forcet)
+            else:
+                if(abs(s.ball.x-s.goal.x)<GAME_WIDTH*0.29):
+                    SuperState.tactic1=0
+                    return m.to_ball()+sh.to_pass2()   
+                else:
+                    SuperState.tactic1=1
+                    return m.to_ball()+sh.to_pass2()  
         else:
+            SuperState.tactic1=0
             return m.to_rank3()+sh.to_pass()
 
 
@@ -417,11 +446,18 @@ class AttaquantStrategy5(Strategy):
         sh=Shoot(s)
         #if(s.hitorrun == True or (abs(s.ball.y-GAME_HEIGHT/2)<0.2*GAME_HEIGHT and s.dgoal<GAME_WIDTH*0.5) ):
         #if(s.hitorrun == True or abs((s.ball-s.goal).x)<GAME_WIDTH*0.5 ):   
-        if(s.hitorrun == True):
+        #if(s.hitorrun == True):
         #if(s.dball<20):
-            return m.to_ball()+sh.to_goal(self.forcet)
+        if(SuperState.tactic1==1):
+            return m.to_tacticm()+sh.to_goal(self.forcet)
         else:
-            return m.to_rank4()+sh.to_goal(self.forcet)
+            if((abs(s.ball.x-s.goal.x)<GAME_WIDTH*0.55 and s.ball.y<GAME_HEIGHT*0.55) or (abs(s.ball.x-s.goal.x)<GAME_WIDTH*0.25 and s.ball.y>GAME_HEIGHT*0.55 and s.ball.y<GAME_HEIGHT*0.7)):
+                if(s.hitorrun==True):
+                    return m.to_ball()+sh.to_goal(self.forcet)
+                else:
+                    return m.to_ball()+sh.to_pass()  
+            else:
+                return m.to_rank4()+sh.to_goal(self.forcet)
 
       
 class DefonceurStrategy5(Strategy):
@@ -434,8 +470,10 @@ class DefonceurStrategy5(Strategy):
         s=SuperState(state,id_team,id_player)
         m=Move(s)
         sh=Shoot(s)
-
-        if(s.dball < 20):
+        if(s.dball < 16 and s.dplayeren>33):
             return m.to_ball()+sh.to_pass()
         else:
-            return m.to_dif()+sh.to_pass()
+            if(s.dball < 12):
+                return m.to_ball()+sh.to_pass()
+            else:
+                return m.to_dif()+sh.to_pass()
